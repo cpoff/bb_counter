@@ -43,7 +43,9 @@ $(document).ready(function () {
         counterView.$el.on("click", "#sub", function () {
         var mod = counterView.model;
         var currVal = mod.get("value");
+        if (currVal > 0) {
         mod.set("value", currVal - 1);
+            }
         });
 
         counterView.$el.on("click", "#clear", function () {
