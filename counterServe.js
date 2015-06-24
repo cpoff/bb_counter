@@ -13,23 +13,35 @@ $(document).ready( function () {
         this.set("value", val+1);
         this.save();
     }      
-    
+    Counter.prototype.dec = function () {
+        var val = this.get("value");
+            if (val > 0) {
+            this.set("value", val - 1);
+        this.save();
+    }  
+    };
+
     counterModel1.fetch();
 
 var CounterView = Backbone.View.extend({
         render: function () {
             var val = this.model.get("value");
-            var btn = '<button>Increment</button>';
-            this.$el.html('<p>'+val+'</p>' + btn);
+            var btn1 = '<button id=inc>Plus</button>';
+            var btn2 = '<button id=dec>Minus</button>';
+            this.$el.html('<p>'+val+'</p>' + btn1 + btn2);
         },
         initialize: function () {
             this.model.on("change", this.render, this);
         },
         events : {
-            'click button' : 'increment'
+            "click #inc" : "increment",
+            "click #dec" : "decrement"        
         },
         increment : function () {
             this.model.inc();
+        },
+        decrement : function () {
+            this.model.dec();
         }
     });
     
