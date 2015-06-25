@@ -7,6 +7,7 @@ $(document).ready( function () {
     });
     
     var counterModel1 = new Counter({id : 1});
+    var counterModel2 = new Counter({});
 
     Counter.prototype.inc = function () {
         var val = this.get("value");
@@ -18,7 +19,7 @@ $(document).ready( function () {
             if (val > 0) {
             this.set("value", val - 1);
         this.save();
-    }  
+            }  
     };
 
     counterModel1.fetch();
@@ -28,7 +29,7 @@ var CounterView = Backbone.View.extend({
             var val = this.model.get("value");
             var btn1 = '<button id=inc>Plus</button>';
             var btn2 = '<button id=dec>Minus</button>';
-            this.$el.html('<p>'+val+'</p>' + btn1 + btn2);
+            this.$el.html('<p> Hit me baby, '+val+' more times.</p>' + btn1 + btn2);
         },
         initialize: function () {
             this.model.on("change", this.render, this);
