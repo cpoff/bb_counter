@@ -1,6 +1,6 @@
    
 var GroceryModel = Backbone.Model.extend({
-    defaults : {"name" : "item", "price" : "price", "quant":"quant"},
+    defaults : {"name":'', "price":'', "quant":''},
     initialize : function () {
         this.fetch();
     },    
@@ -18,9 +18,9 @@ var GroceryView = Backbone.View.extend({
         var btn2 = '<button id=clear>Clear line</button>';
         var btn = '<button id=delete>Remove last</button>';
         var inputName = '<input type="text" class="inputName" value="' + valName + '" />';
-        var inputPrice = '<input type="number" value="' + valPrice + '" />';
-        var inputQuant = '<input type="number" value="' + valQuant + '" />';
-        this.$el.html("<div>" + inputName + inputPrice + inputQuant + btn2 + btn + "</div>");
+        var inputPrice = '<input type="number" class="inputPrice" value="' + valPrice + '" />';
+        var inputQuant = '<input type="number" class="inputQuant" value="' + valQuant + '" />';
+        this.$el.html("<div>" + inputName + inputPrice + inputQuant + btn + "</div>");
     },
     
     initialize: function () {
@@ -68,6 +68,8 @@ var GroceryView = Backbone.View.extend({
     updateOnEnter: function (e){
         if(e.keyCode == 13) {
             this.nameReplace(this.$el.find(".inputName").val());
+            this.priceReplace(this.$el.find(".inputPrice").val());
+            this.quantReplace(this.$el.find(".inputQuant").val());
         }
     }
 });
@@ -104,12 +106,18 @@ var GroceryCollectionView = Backbone.View.extend({
     },
     addOne : function (model) {
         console.log('Added');
-//        model.set("value","Talk");
+//        model.set("value","Here's where you type something...");
         var view = new GroceryView({model : model});
         newArr.push(view);
         view.render();
         this.$("#grocery-list").append(view.$el);
+        console.log(this);
+        var models = this.collection.models ;
+        for(var i=0; i < models.length; i++) {
+            models[i].save();  
+        }
     },
+        
     addCollection : function () {
         this.collection.create({id : idCount});
         idCount = idCount+1;
