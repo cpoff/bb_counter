@@ -50,6 +50,7 @@ var GroceryView = Backbone.View.extend({
 
     quantReplace : function (str) {
         this.model.set('quant', str);
+        console.log(newArr);
         this.model.save();
     },
 
@@ -62,7 +63,6 @@ var GroceryView = Backbone.View.extend({
     console.log('Goner');
     var lastItem = newArr.pop();
     lastItem.remove();
-    console.log(newArr);
     },  
     
     updateOnEnter: function (e){
@@ -70,6 +70,7 @@ var GroceryView = Backbone.View.extend({
             this.nameReplace(this.$el.find(".inputName").val());
             this.priceReplace(this.$el.find(".inputPrice").val());
             this.quantReplace(this.$el.find(".inputQuant").val());
+//            console.log(this.$el.find(".inputName").val());
         }
     }
 });
@@ -102,20 +103,20 @@ var GroceryCollectionView = Backbone.View.extend({
     },
     events : {
         "click #addbutton" : "addCollection",
-        "click #delete" : "delete"
     },
+    
     addOne : function (model) {
-        console.log('Added');
+        console.log('model added to collection');
 //        model.set("value","Here's where you type something...");
         var view = new GroceryView({model : model});
         newArr.push(view);
         view.render();
-        this.$("#grocery-list").append(view.$el);
-        console.log(this);
         var models = this.collection.models ;
         for(var i=0; i < models.length; i++) {
             models[i].save();  
         }
+        this.$("#grocery-list").append(view.$el);
+        console.log(this.collection.models);
     },
         
     addCollection : function () {
