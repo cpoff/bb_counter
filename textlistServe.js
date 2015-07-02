@@ -1,6 +1,4 @@
 
-$(document).ready( function () {
-
 var TextModel = Backbone.Model.extend({
     defaults : {"value" : ""},
     initialize : function () {
@@ -62,9 +60,9 @@ var TextCollectionView = Backbone.View.extend({
     events : {
         "click #addbutton" : "addCollection"
     },
-    addOne : function (txt) {
-        txt.set("value","Enter something here...");
-        var view = new TextView({model : txt});
+    addOne : function (model) {
+        model.set("value","Laugh it up, Fuzzball");
+        var view = new TextView({model : model});
         view.render();
         this.$("#text-list").append(view.$el);
     },
@@ -73,10 +71,11 @@ var TextCollectionView = Backbone.View.extend({
         idCount = idCount+1;
     }
 });
+var textCollection, textCollectionView;
+$(document).ready( function () {
 
-var textCollection = new TextCollection();
-
-var textCollectionView = new TextCollectionView({ collection : textCollection});
+textCollection = new TextCollection();
+textCollectionView = new TextCollectionView({ collection : textCollection});
 
 textCollectionView.render();
 
